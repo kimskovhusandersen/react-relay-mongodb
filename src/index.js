@@ -1,12 +1,54 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { QueryRenderer } from 'react-relay';
+import environment from './environment';
+import graphql from 'babel-plugin-relay/macro';
+
+import App from './components/App';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const renderQuery = ({ error, props }) => {
+  if (error) {
+    return <div>{error.message}</div>;
+  } else if (props) {
+    return (
+      <>
+        <App viewer={props.viewer} />
+      </>
+    );
+  }
+  return <div>Loading...</div>;
+};
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
+const rootElement = document.getElementById('root');
+
+if (rootElement) {
+  ReactDOM.render(
+    <QueryRenderer
+      environment={environment}
+      query={graphql`
+        query appQuery {
+          viewer {
+            id
+            allContacts(first: 1000)
+              @connection(key: "Main_allContacts") {
+              edges {
+                node {
+                  id
+                  name
+                  email
+                }
+              }
+            }
+          }
+        }
+      `}
+      render={renderQuery}
+    />,
+    rootElement,
+  );
+}
+
 serviceWorker.unregister();

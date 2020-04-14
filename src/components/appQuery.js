@@ -1,7 +1,7 @@
 import graphql from 'babel-plugin-relay/macro';
 
-export const GET_CONTACTS = graphql`
-  query contactListQuery {
+export const appQuery = graphql`
+  query appQueryQuery {
     viewer {
       id
       allContacts(first: 1000) @connection(key: "Main_allContacts") {

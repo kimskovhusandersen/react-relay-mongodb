@@ -1,9 +1,9 @@
 import React from 'react';
-import Form from '../components/Form/Form';
+import Form from '../components/Contacts/Form';
 import { commitMutation } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import environment from './environment';
-import updateLocalStore from './updateLocalStore';
+import environment from '../environment';
+import updateLocalStore from '../updateLocalStore';
 
 const mutation = graphql`
   mutation MutationComponentMutation($input: ContactInput!) {

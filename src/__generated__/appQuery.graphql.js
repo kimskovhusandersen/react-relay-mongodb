@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 6a676a6b903aec9f88c4077a042dafe4
+ * @relayHash ad530aae119ebcaee213bf1a804767f8
  */
 
 /* eslint-disable */
@@ -9,8 +9,8 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type contactListQueryVariables = {||};
-export type contactListQueryResponse = {|
+export type appQueryVariables = {||};
+export type appQueryResponse = {|
   +viewer: ?{|
     +id: string,
     +allContacts: ?{|
@@ -24,15 +24,15 @@ export type contactListQueryResponse = {|
     |},
   |}
 |};
-export type contactListQuery = {|
-  variables: contactListQueryVariables,
-  response: contactListQueryResponse,
+export type appQuery = {|
+  variables: appQueryVariables,
+  response: appQueryResponse,
 |};
 */
 
 
 /*
-query contactListQuery {
+query appQuery {
   viewer {
     id
     allContacts(first: 1000) {
@@ -151,9 +151,9 @@ v2 = [
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "contactListQuery",
+  "name": "appQuery",
   "id": null,
-  "text": "query contactListQuery {\n  viewer {\n    id\n    allContacts(first: 1000) {\n      edges {\n        node {\n          id\n          name\n          email\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n",
+  "text": "query appQuery {\n  viewer {\n    id\n    allContacts(first: 1000) {\n      edges {\n        node {\n          id\n          name\n          email\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n",
   "metadata": {
     "connection": [
       {
@@ -169,7 +169,7 @@ return {
   },
   "fragment": {
     "kind": "Fragment",
-    "name": "contactListQuery",
+    "name": "appQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -200,7 +200,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "contactListQuery",
+    "name": "appQuery",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -239,5 +239,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9b20c8f2ae5134140fcd21dcb3bc485a';
+(node/*: any*/).hash = '74810ee46114f68da6c40d665a9c61d8';
 module.exports = node;

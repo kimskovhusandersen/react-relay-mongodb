@@ -5,11 +5,11 @@
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "relay": "relay-compiler --src ./src --schema ./src/js/schema.graphql --watch",
+    "relay": "relay-compiler --src ./src --schema ./src/schema.graphql --watch",
     "server": "nodemon --exec babel-node server/index.js",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "dev": "concurrently \"npm run relay\" \"npm run server\" \"npm run start\""
+    "dev": "concurrently \"npm run server\" \"npm run start\""
   },
   "nodemonConfig": {
     "ignore": [
@@ -44,7 +44,7 @@
     "@babel/core": "^7.2.2",
     "@babel/register": "^7.0.0",
     "babel-cli": "^6.26.0",
-    "babel-plugin-relay": "dev",
+    "babel-plugin-relay": "^2.0.0-rc.2",
     "babel-plugin-transform-async-functions": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",

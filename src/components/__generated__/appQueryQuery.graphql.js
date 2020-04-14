@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8b331b7440481a95f3b90d4ef9f493f3
+ * @relayHash acf4dcfb9fc870f5d9545889dcd0d326
  */
 
 /* eslint-disable */
@@ -9,8 +9,8 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type RelayAppQueryVariables = {||};
-export type RelayAppQueryResponse = {|
+export type appQueryQueryVariables = {||};
+export type appQueryQueryResponse = {|
   +viewer: ?{|
     +id: string,
     +allContacts: ?{|
@@ -24,15 +24,15 @@ export type RelayAppQueryResponse = {|
     |},
   |}
 |};
-export type RelayAppQuery = {|
-  variables: RelayAppQueryVariables,
-  response: RelayAppQueryResponse,
+export type appQueryQuery = {|
+  variables: appQueryQueryVariables,
+  response: appQueryQueryResponse,
 |};
 */
 
 
 /*
-query RelayAppQuery {
+query appQueryQuery {
   viewer {
     id
     allContacts(first: 1000) {
@@ -151,9 +151,9 @@ v2 = [
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "RelayAppQuery",
+  "name": "appQueryQuery",
   "id": null,
-  "text": "query RelayAppQuery {\n  viewer {\n    id\n    allContacts(first: 1000) {\n      edges {\n        node {\n          id\n          name\n          email\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n",
+  "text": "query appQueryQuery {\n  viewer {\n    id\n    allContacts(first: 1000) {\n      edges {\n        node {\n          id\n          name\n          email\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n",
   "metadata": {
     "connection": [
       {
@@ -169,7 +169,7 @@ return {
   },
   "fragment": {
     "kind": "Fragment",
-    "name": "RelayAppQuery",
+    "name": "appQueryQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -187,7 +187,7 @@ return {
           {
             "kind": "LinkedField",
             "alias": "allContacts",
-            "name": "__RelayApp_allContacts_connection",
+            "name": "__Main_allContacts_connection",
             "storageKey": null,
             "args": null,
             "concreteType": "ContactConnection",
@@ -200,7 +200,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "RelayAppQuery",
+    "name": "appQueryQuery",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -229,7 +229,7 @@ return {
             "name": "allContacts",
             "args": v2,
             "handle": "connection",
-            "key": "RelayApp_allContacts",
+            "key": "Main_allContacts",
             "filters": null
           }
         ]
@@ -239,5 +239,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a26e25d0c3d89d64852cd212e309a803';
+(node/*: any*/).hash = '9aa2607a6308f236d028d2c9f08f6404';
 module.exports = node;
