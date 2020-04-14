@@ -29,7 +29,7 @@ if (rootElement) {
     <QueryRenderer
       environment={environment}
       query={graphql`
-        query appQuery {
+        query srcQuery {
           viewer {
             id
             allContacts(first: 1000)
