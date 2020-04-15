@@ -30,6 +30,7 @@ MongoClient.connect(MONGO_URI, (err, database) => {
     graphqlHTTP(async req => ({
       schema,
       pretty: true,
+      graphiql: true,
       context: {
         mongodb: await db,
       },

@@ -5,10 +5,10 @@ const {
 } = require('graphql');
 
 module.exports = new GraphQLInputObjectType({
-  name: 'ContactInput',
+  name: 'PostInput',
   fields: {
     _id: { type: GraphQLID },
-    name: { type: GraphQLString },
-    email: { type: GraphQLString },
+    text: { type: GraphQLString },
+    author: { type: GraphQLString },
   },
 });

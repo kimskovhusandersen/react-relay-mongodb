@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a67890b5967884c3bd83c9e8782eeada
+ * @relayHash b25149570babeb1dcad0944043201744
  */
 
 /* eslint-disable */
@@ -10,7 +10,8 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type ContactInput = {
-  name: string,
+  _id?: ?string,
+  name?: ?string,
   email?: ?string,
 };
 export type MutationComponentMutationVariables = {|
@@ -22,7 +23,7 @@ export type MutationComponentMutationResponse = {|
       +node: ?{|
         +id: string,
         +email: ?string,
-        +name: string,
+        +name: ?string,
       |}
     |}
   |}
@@ -73,7 +74,7 @@ v1 = [
         "type": "ContactInput!"
       }
     ],
-    "concreteType": "CreateContactPayload",
+    "concreteType": "ContactPayload",
     "plural": false,
     "selections": [
       {

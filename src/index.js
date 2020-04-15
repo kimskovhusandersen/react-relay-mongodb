@@ -33,12 +33,25 @@ if (rootElement) {
           viewer {
             id
             allContacts(first: 1000)
-              @connection(key: "Main_allContacts") {
+              @connection(key: "index_allContacts") {
               edges {
                 node {
                   id
                   name
                   email
+                }
+              }
+            }
+          }
+          viewer {
+            id
+            allPosts(first: 1000)
+              @connection(key: "PostListContainer_allPosts") {
+              edges {
+                node {
+                  id
+                  text
+                  author
                 }
               }
             }

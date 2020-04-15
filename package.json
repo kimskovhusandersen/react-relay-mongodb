@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
+    "dev": "concurrently \"npm run update-schema\" \"npm run server\" \"npm run start\"",
     "eject": "react-scripts eject",
     "relay": "relay-compiler --src ./src --schema ./src/schema.graphql --watch",
     "server": "nodemon --exec babel-node server/index.js",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
+    "update-schema": "babel-node --extensions \".es6,.js,.es,.jsx,.mjs,.ts\" ./scripts/updateSchema.js"
   },
   "nodemonConfig": {
     "ignore": [

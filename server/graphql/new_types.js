@@ -6,25 +6,26 @@ import {
   GraphQLString,
   GraphQLID,
   GraphQLInt,
-  GraphQLBoolean
+  GraphQLBoolean,
+  GraphQLInputObjectType,
 } from 'graphql';
 
 export const PageInfo = new GraphQLObjectType({
   name: 'PageInfo',
   fields: {
     hasNextPage: {
-      type: new GraphQLNonNull(GraphQLBoolean)
+      type: new GraphQLNonNull(GraphQLBoolean),
     },
     hasPreviousPage: {
-      type: new GraphQLNonNull(GraphQLBoolean)
+      type: new GraphQLNonNull(GraphQLBoolean),
     },
     startCursor: {
-      type: GraphQLString
+      type: GraphQLString,
     },
     endCursor: {
-      type: GraphQLString
-    }
-  }
+      type: GraphQLString,
+    },
+  },
 });
 
 export const Contact = new GraphQLObjectType({
@@ -32,17 +33,31 @@ export const Contact = new GraphQLObjectType({
   fields: {
     id: {
       type: new GraphQLNonNull(GraphQLID),
-      resolve(parent) {
-        return parent._id.toString();
-      }
+      resolve: parent => parent._id.toString(),
     },
     name: {
-      type: GraphQLString
+      type: GraphQLString,
     },
     email: {
-      type: GraphQLString
-    }
-  }
+      type: GraphQLString,
+    },
+  },
+});
+
+export const Post = new GraphQLObjectType({
+  name: 'Post',
+  fields: {
+    id: {
+      type: new GraphQLNonNull(GraphQLID),
+      resolve: parent => parent._id.toString(),
+    },
+    text: {
+      type: GraphQLString,
+    },
+    author: {
+      type: GraphQLString,
+    },
+  },
 });
 
 const ContactEdge = new GraphQLObjectType({
@@ -50,28 +65,40 @@ const ContactEdge = new GraphQLObjectType({
   fields: () => ({
     cursor: {
       type: Cursor,
-      resolve(parent) {
-        return {
-          value: parent._id.toString()
-        };
-      }
+      resolve: parent => ({
+        value: parent._id.toString(),
+      }),
     },
     node: {
       type: Contact,
-      resolve(parent) {
-        return parent;
-      }
-    }
-  })
+      resolve: parent => parent,
+    },
+  }),
+});
+
+const PostEdge = new GraphQLObjectType({
+  name: 'PostEdge',
+  fields: () => ({
+    cursor: {
+      type: Cursor,
+      resolve: parent => ({
+        value: parent._id.toString(),
+      }),
+    },
+    node: {
+      type: Post,
+      resolve: parent => parent,
+    },
+  }),
 });
 
 export const ContactPayload = new GraphQLObjectType({
   name: 'ContactPayload',
   fields: {
     contactEdge: {
-      type: ContactEdge
-    }
-  }
+      type: ContactEdge,
+    },
+  },
 });
 
 const ContactConnection = new GraphQLObjectType({
@@ -79,24 +106,35 @@ const ContactConnection = new GraphQLObjectType({
   fields: () => ({
     edges: {
       type: new GraphQLList(ContactEdge),
-      resolve: async parent => {
-        return await parent.query.find().toArray();
-      }
+      resolve: async parent => await parent.query.find().toArray(),
     },
     pageInfo: {
-      type: PageInfo
-    }
-  })
+      type: PageInfo,
+    },
+  }),
+});
+
+const PostConnection = new GraphQLObjectType({
+  name: 'PostConnection',
+  fields: () => ({
+    edges: {
+      type: new GraphQLList(PostEdge),
+      resolve: async parent => await parent.query.find().toArray(),
+    },
+    pageInfo: {
+      type: PageInfo,
+    },
+  }),
 });
 
 export function createConnectionArguments() {
   return {
     first: {
-      type: GraphQLInt
+      type: GraphQLInt,
     },
     last: {
-      type: GraphQLInt
-    }
+      type: GraphQLInt,
+    },
   };
 }
 
@@ -104,16 +142,21 @@ export const Viewer = new GraphQLObjectType({
   name: 'Viewer',
   fields: () => ({
     id: {
-      type: new GraphQLNonNull(GraphQLID)
+      type: new GraphQLNonNull(GraphQLID),
     },
     allContacts: {
       type: ContactConnection,
       args: createConnectionArguments(),
-      resolve(parent, args, { mongodb }) {
-        return {
-          query: mongodb.collection('contacts')
-        };
-      }
-    }
-  })
+      resolve: (_, args, { mongodb }) => ({
+        query: mongodb.collection('contacts'),
+      }),
+    },
+    allPosts: {
+      type: PostConnection,
+      args: createConnectionArguments(),
+      resolve: (_, args, { mongodb }) => ({
+        query: mongodb.collection('posts'),
+      }),
+    },
+  }),
 });

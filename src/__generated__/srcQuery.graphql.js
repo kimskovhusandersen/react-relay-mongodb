@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2a64f44eb4e3702058b009525647167d
+ * @relayHash 50d639c8271234804dbfceacbdaa9117
  */
 
 /* eslint-disable */
@@ -17,8 +17,17 @@ export type srcQueryResponse = {|
       +edges: ?$ReadOnlyArray<?{|
         +node: ?{|
           +id: string,
-          +name: string,
+          +name: ?string,
           +email: ?string,
+        |}
+      |}>
+    |},
+    +allPosts: ?{|
+      +edges: ?$ReadOnlyArray<?{|
+        +node: ?{|
+          +id: string,
+          +text: ?string,
+          +author: ?string,
         |}
       |}>
     |},
@@ -50,6 +59,21 @@ query srcQuery {
         hasNextPage
       }
     }
+    allPosts(first: 1000) {
+      edges {
+        node {
+          id
+          text
+          author
+          __typename
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
   }
 }
 */
@@ -62,7 +86,46 @@ var v0 = {
   "args": null,
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "cursor",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "pageInfo",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "endCursor",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hasNextPage",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+},
+v4 = [
   {
     "kind": "LinkedField",
     "alias": null,
@@ -96,51 +159,57 @@ v1 = [
             "args": null,
             "storageKey": null
           },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "__typename",
-            "args": null,
-            "storageKey": null
-          }
+          v1
         ]
       },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "cursor",
-        "args": null,
-        "storageKey": null
-      }
+      v2
     ]
   },
+  v3
+],
+v5 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "pageInfo",
+    "name": "edges",
     "storageKey": null,
     "args": null,
-    "concreteType": "PageInfo",
-    "plural": false,
+    "concreteType": "PostEdge",
+    "plural": true,
     "selections": [
       {
-        "kind": "ScalarField",
+        "kind": "LinkedField",
         "alias": null,
-        "name": "endCursor",
+        "name": "node",
+        "storageKey": null,
         "args": null,
-        "storageKey": null
+        "concreteType": "Post",
+        "plural": false,
+        "selections": [
+          v0,
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "text",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "author",
+            "args": null,
+            "storageKey": null
+          },
+          v1
+        ]
       },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "hasNextPage",
-        "args": null,
-        "storageKey": null
-      }
+      v2
     ]
-  }
+  },
+  v3
 ],
-v2 = [
+v6 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -153,7 +222,7 @@ return {
   "operationKind": "query",
   "name": "srcQuery",
   "id": null,
-  "text": "query srcQuery {\n  viewer {\n    id\n    allContacts(first: 1000) {\n      edges {\n        node {\n          id\n          name\n          email\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n",
+  "text": "query srcQuery {\n  viewer {\n    id\n    allContacts(first: 1000) {\n      edges {\n        node {\n          id\n          name\n          email\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    allPosts(first: 1000) {\n      edges {\n        node {\n          id\n          text\n          author\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n",
   "metadata": {
     "connection": [
       {
@@ -163,6 +232,15 @@ return {
         "path": [
           "viewer",
           "allContacts"
+        ]
+      },
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "viewer",
+          "allPosts"
         ]
       }
     ]
@@ -187,12 +265,22 @@ return {
           {
             "kind": "LinkedField",
             "alias": "allContacts",
-            "name": "__Main_allContacts_connection",
+            "name": "__index_allContacts_connection",
             "storageKey": null,
             "args": null,
             "concreteType": "ContactConnection",
             "plural": false,
-            "selections": v1
+            "selections": v4
+          },
+          {
+            "kind": "LinkedField",
+            "alias": "allPosts",
+            "name": "__PostListContainer_allPosts_connection",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "PostConnection",
+            "plural": false,
+            "selections": v5
           }
         ]
       }
@@ -218,18 +306,37 @@ return {
             "alias": null,
             "name": "allContacts",
             "storageKey": "allContacts(first:1000)",
-            "args": v2,
+            "args": v6,
             "concreteType": "ContactConnection",
             "plural": false,
-            "selections": v1
+            "selections": v4
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "allContacts",
-            "args": v2,
+            "args": v6,
             "handle": "connection",
-            "key": "Main_allContacts",
+            "key": "index_allContacts",
+            "filters": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "allPosts",
+            "storageKey": "allPosts(first:1000)",
+            "args": v6,
+            "concreteType": "PostConnection",
+            "plural": false,
+            "selections": v5
+          },
+          {
+            "kind": "LinkedHandle",
+            "alias": null,
+            "name": "allPosts",
+            "args": v6,
+            "handle": "connection",
+            "key": "PostListContainer_allPosts",
             "filters": null
           }
         ]
@@ -239,5 +346,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'da600e5b85e0e61ef3d5e63ee0c5ae4e';
+(node/*: any*/).hash = '899921ca2e16853644269fb8e0c1b8d2';
 module.exports = node;

@@ -1,12 +1,15 @@
+import React from 'react';
+
 import { graphql, createFragmentContainer } from 'react-relay';
 
-import React from 'react';
+import Posts from '../Posts/PostListContainer';
 
 const Contact = ({ contact }) => {
   return (
     <div>
       <p>Name: {contact.name}</p>
       <p>Email: {contact.email}</p>
+      <Posts />
     </div>
   );
 };
